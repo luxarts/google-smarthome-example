@@ -1,9 +1,8 @@
 # google-smarthome-example
 Example application for Smart Home (Google Home).
 
-# 
-1. Setup an OAuth2 server 
-2. 
+# Index
+1. [Setup an OAuth2 server](#1-setup-an-oauth2-server)
 
 ---
 
@@ -14,4 +13,4 @@ Example application for Smart Home (Google Home).
 ---
 
 # Instructions
-###
+## 1. Setup an OAuth2 server
