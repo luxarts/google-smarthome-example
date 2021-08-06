@@ -1,21 +1,14 @@
-FROM heroku/heroku:18-build as build
+FROM golang:rc-alpine3.14 AS builder
 
-COPY . /app
+RUN mkdir /build
+WORKDIR /build
+COPY . .
+WORKDIR /build
+RUN go build -o google-smarthome-example ./cmd/main.go
+
+FROM alpine
+RUN adduser -S -D -H -h /app appuser
+USER appuser
+COPY --from=builder /build/google-smarthome-example /app/
 WORKDIR /app
-
-# Setup buildpack
-RUN mkdir -p /tmp/buildpack/heroku/go /tmp/build_cache /tmp/env
-RUN curl https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/go.tgz | tar xz -C /tmp/buildpack/heroku/go
-
-#Execute Buildpack
-RUN STACK=heroku-18 /tmp/buildpack/heroku/go/bin/compile /app /tmp/build_cache /tmp/env
-
-# Prepare final, minimal image
-FROM heroku/heroku:18
-
-COPY --from=build /app /app
-ENV HOME /app
-WORKDIR /app
-RUN useradd -m heroku
-USER heroku
-CMD /app/bin/google-smarthome-example
+CMD ["./google-smarthome-example"]

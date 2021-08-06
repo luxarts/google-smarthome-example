@@ -2,19 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
-	"os"
 )
 
 func main(){
-	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("PORT must be set")
-	}
-
 	router := initRouter()
-	router.Run(":"+port)
+	router.Run()
 }
 
 func initRouter() *gin.Engine{
