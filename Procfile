@@ -1,1 +1,1 @@
-web: .docker_build/google-smarthome-example
+web: bin/google-smarthome-example
